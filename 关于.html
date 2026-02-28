@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Se Hub-游戏</title>
+
+    <style>
+        body {
+            background: radial-gradient(ellipse at 50% 30%, #2e2e2e, #000000);
+            min-height: 100vh;
+            margin: 0;
+            padding: 10px;
+        }
+
+        .TopBar{
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            min-height: 70px;
+            background: rgba(56, 56, 56, 0.3);
+            backdrop-filter: blur(10px) brightness(1);
+            border-radius: 20px;
+            margin: 20px auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            border: 1px solid rgba(177, 177, 177, 0.2);
+            transition: all 0.3s ease;
+            padding: 10px 15px;
+            box-sizing: border-box;
+            font-size: 20px;
+        }
+
+        .TopBar:hover{
+            background: rgba(56, 56, 56, 0.5);
+            box-shadow: 0 0 20px rgba(90, 90, 90, 0.2);
+            backdrop-filter: blur(10px) brightness(1.1);
+            transform: translateY(-5px);
+        }
+
+        .ButtonZones{
+            display: flex;
+            margin-left: auto;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .TitleZones{
+            display: flex;
+            margin-left: auto;
+            gap: 8px;
+            position: relative;
+        }
+
+        .Shop, .Info{
+            position: relative;
+            background: #2e2e2e;
+            border-radius: 30px;
+            border: 1px solid #363636;
+            color: #e4e3e3;
+            font-size: 16px;
+            height: 45px;
+            width: 90px;
+            justify-content: center;
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            transition: all 0.3s ease; 
+            margin: 0;
+            text-decoration: none;
+        }
+        
+        .Shop:hover, .Info:hover{
+            background: #f8f8f8;
+            color: #363636;
+        }
+
+        .Shop:active, .Info:active{
+            background: #eeeeee;
+            border: 1px solid #363636;
+            color: #2e2e2e;
+            transform: scale(0.85);
+        }
+
+        .TitleButton { 
+            background: transparent;
+            border: transparent;
+            color: white;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            padding: 5px 8px;
+            text-decoration: none;
+        }
+
+        .TitleButton:hover {
+            transform: translateY(-5px);
+        }
+
+        .Grass1{
+            background: rgba(56, 56, 56, 0.3);
+            backdrop-filter: blur(10px) brightness(1);
+            border-radius: 20px;
+            margin: 30px auto;
+            color:#e4e3e3;
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            min-height: 475px;
+            display: flex;
+            align-items: normal;
+            justify-content: normal;
+            border: 1px solid rgba(177, 177, 177, 0.2);
+            box-sizing: border-box;
+            padding: 20px;
+        }
+
+        .TitleZone2 {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            flex-direction: column;
+            padding: 15px;
+            width: 100%;
+        }
+
+        .TitleZone2 h1 {
+            margin-left: 0 !important;
+            word-break: break-word;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .GameGrid {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            justify-content: flex-start;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 30px;
+        }
+
+        .GameTag {
+            background: rgba(56, 56, 56, 0.4);
+            backdrop-filter: blur(5px) brightness(0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 10px 20px;
+            font-size: 15px;
+            color: #e4e3e3;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: default;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            letter-spacing: 0.3px;
+            font-weight: 400;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .GameTag:hover {
+            transform: translateY(-8px) scale(1.05);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 70, 70, 0.4);
+            box-shadow: 0 15px 25px rgba(255, 0, 0, 0.2);
+            color: #ffffff;
+            text-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
+        }
+
+        .GameTag:active {
+            transform: translateY(-2px) scale(0.98);
+        }
+
+        .GameTag.fixing {
+            position: relative;
+            background: rgba(80, 40, 40, 0.5);
+            border-color: rgba(255, 100, 100, 0.3);
+        }
+
+        .GameTag.fixing:hover {
+            background: rgba(120, 50, 50, 0.7);
+            border-color: #ff6666;
+        }
+
+        .GameTag.fixing::after {
+            content: "修复中";
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: #ff4444;
+            color: white;
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 30px;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(255, 0, 0, 0.4);
+            transform: rotate(3deg);
+            transition: all 0.3s ease;
+        }
+
+        .GameTag.fixing:hover::after {
+            transform: rotate(0deg) scale(1.1);
+            background: #ff6666;
+        }
+
+        .StateZone {
+            display: flex;
+            margin: 10px 0;
+            width: 100%;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .CreateState {
+            background: rgba(56, 56, 56, 0.3);
+            backdrop-filter: blur(10px) brightness(1);
+            border-radius: 20px;
+            color:#e4e3e3;
+            width: auto;
+            min-width: 90px;
+            height: 40px;
+            border: 1px solid rgba(177, 177, 177, 0.2);
+            font-size: 13px;
+            line-height: 40px;
+            text-align: center;
+            transition: all 0.3s ease;
+            padding: 0 12px;
+            margin: 0;
+        }
+
+        .CreateState:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(112, 112, 112, 0.5);
+        }
+
+        .CopyButton {
+            margin-left: 0;
+            margin-top: 15px;
+            background: radial-gradient(ellipse at 50% 30%, #FF0000, #883333);
+            border-radius: 20px;
+            width: 120px;
+            height: 45px;
+            line-height: 45px;
+            text-align: center;
+            border: 1px solid rgba(177, 177, 177, 0.2);
+            font-size: 16px;
+            color:#eeeeee;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .CopyButton:hover {
+            box-shadow: 0 0 30px rgba(189, 89, 89, 0.3);
+        }
+
+        .CopyButton:active {
+            transform: scale(0.8);
+        }
+
+        .CodeTab {
+            margin-top: 15px;
+            background: rgba(44, 44, 44, 0.3);
+            border-radius: 20px;
+            border: 1px solid rgba(177, 177, 177, 0.2);
+            width: 100%;
+            height: auto;
+            min-height: 215px;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        .CodeTab > div:last-child {
+            background: rgba(56, 56, 56, 0.3) !important;
+            border-radius: 20px !important;
+            width: 100% !important;
+            height: auto !important;
+            min-height: 100px;
+            margin: 20px 0 10px 0 !important;
+            border: 1px solid rgba(177, 177, 177, 0.2) !important;
+            padding: 15px !important;
+            box-sizing: border-box !important;
+            overflow-x: auto !important;
+        }
+
+        .CodeTab > div:last-child h2 {
+            margin-left: 0 !important;
+            font-size: clamp(16px, 4vw, 23px) !important;
+            white-space: normal !important;
+            word-break: break-word !important;
+            line-height: 1.4 !important;
+        }
+
+        .TitleZones > div[style*="linear-gradient"] {
+            display: none;
+        }
+
+        .TopBar h1, .TopBar h2 {
+            margin: 0 !important;
+            font-size: clamp(20px, 6vw, 30px) !important;
+            line-height: 1.2;
+        }
+
+        .TitleZone2 h2 {
+            font-size: clamp(16px, 4vw, 24px);
+        }
+
+        .TopBar:last-child h1 {
+            font-size: clamp(16px, 4vw, 20px) !important;
+            margin: 0 !important;
+        }
+
+        .TopBar:last-child div h1 {
+            margin-top: 0 !important;
+            font-size: clamp(14px, 3.5vw, 20px) !important;
+        }
+
+        svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        @media (max-width: 500px) {
+            .TopBar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .TitleZones {
+                margin: 10px 0;
+                justify-content: center;
+            }
+            
+            .ButtonZones {
+                margin-left: 0;
+                justify-content: center;
+            }
+            
+            .StateZone {
+                justify-content: center;
+            }
+            
+            .CreateState {
+                flex: 1;
+                min-width: 80px;
+            }
+            
+            .CopyButton {
+                width: 100%;
+            }
+
+            .GameTag {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="TopBar">
+        <span style="color: #e4e3e3;"><font color="#FF0000">Se</font>cular Hub</span>
+
+        <div class="TitleZones"> 
+            <div style="background: linear-gradient(to right, transparent, rgba(112, 112, 112, 0.5) 20%, rgba(112, 112, 112, 0.5) 80%, transparent); margin: 60px -50px; width: 200px; height: 2px; position: absolute; border-radius: 20px; pointer-events: none;"></div>
+            <a href="主页.html" class="TitleButton">主页</a>
+            <a href="游戏.html" class="TitleButton">游戏</a>
+            <a href="关于.html" class="TitleButton">关于</a>
+        </div>
+
+        <div class="ButtonZones">
+            <a href="购买.html" class="Shop"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-5a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5"></path><path d="M17.774 10.31a1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.451 0 1.12 1.12 0 0 0-1.548 0 2.5 2.5 0 0 1-3.452 0 1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.77-3.248l2.889-4.184A2 2 0 0 1 7 2h10a2 2 0 0 1 1.653.873l2.895 4.192a2.5 2.5 0 0 1-3.774 3.244"></path><path d="M4 10.95V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8.05"></path></svg>购买</a>
+            <a href="规则.html" class="Shop"> <svg data-v-15b35c9e="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>规则</a>
+        </div>
+    </div>
+
+    <div class="Grass1">
+        <div class="GameGrid">
+            <h1>关于我们:</h1>
+            <span class="GameTag">主要制作人员: Abyass-King Karisob Ccat Parke</span>
+            <span class="GameTag">我们可以保证在脚本圈里让您拥有庇护之处</span>
+            <span class="GameTag">我们更建议去用德与中山 网址: https://dyzs-script.net/ 追求便宜可以用Se 追求高级 强大选用德与中山</span>
+            <span class="GameTag">我们会提供详细的教程和贴心的售后服务</span>
+            <span class="GameTag">此脚本在2026年1月成立</span>
+            <span class="GameTag">此网页由@Abyass-King所编写</span>
+        </div>
+    </div>
+    <div class="TopBar">
+        <span style="color: #e4e3e3">Secular Hub</span>
+
+        <div style="display: flex; margin-left: auto; margin-right: 20px">
+            <span style="color: #7a7a7a;">Secular.Pro 2025-2124</span>
+        </div>
+    </div>
+    <audio controls loop autoplay>
+        <source src = "Music1.mp3">
+    </audio>
+</body>
+</html>
